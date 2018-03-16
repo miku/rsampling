@@ -4,6 +4,15 @@ Simple [reservoir
 sampling](https://en.wikipedia.org/wiki/Reservoir_sampling#Algorithm_R) for the
 command line.
 
+## Install
+```
+$ go get github.com/miku/rsampling/cmd/...
+```
+
+Or some [release](https://github.com/miku/rsampling/releases).
+
+## Usage
+
 ```
 $ seq 100 | rsampling -s 8
 71
@@ -15,6 +24,8 @@ $ seq 100 | rsampling -s 8
 89
 77
 ```
+
+## Performance
 
 Sometimes a
 
