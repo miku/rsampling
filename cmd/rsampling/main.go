@@ -1,78 +1,79 @@
 package main
 
 import (
+	"bufio"
+	"flag"
 	"fmt"
+	"io"
+	"log"
 	"math/rand"
-	"strconv"
+	"os"
 	"strings"
 	"time"
+)
 
-	"github.com/fatih/color"
+var (
+	size = flag.Int("s", 16, "number of sample to obtain")
+	seed = flag.Int64("r", int64(time.Now().Nanosecond()), "random seed")
 )
 
 type Reservoir struct {
-	Counter   int
-	Sample    [16]int
-	LastIndex int
+	counter int64
+	size    int
+	sample  []string
 }
 
-var Green = color.New(color.Bold, color.FgGreen).SprintfFunc()
+func NewReservoir() *Reservoir {
+	return &Reservoir{size: 16}
+}
+
+func NewReservoirSize(size int) *Reservoir {
+	return &Reservoir{size: size}
+}
 
 func (r *Reservoir) String() string {
-	var vs []string
-	for i, v := range r.Sample {
-		s := strconv.Itoa(v)
-		if i == r.LastIndex {
-			vs = append(vs, Green(s))
-		} else {
-			vs = append(vs, s)
-		}
-	}
-
-	return fmt.Sprintf("[%04d][%0.8f][%s]", r.Counter, r.P(), strings.Join(vs, ", "))
+	return strings.Join(r.sample, "\n")
 }
 
-func (r *Reservoir) N() int {
-	return len(r.Sample)
+func (r *Reservoir) Sample() []string {
+	return r.sample
 }
 
 func (r *Reservoir) P() float64 {
-	if r.Counter < r.N() {
+	if r.counter < int64(r.size) {
 		return 0
 	}
-	return float64(r.N()) / float64(r.Counter)
+	return float64(r.size) / float64(r.counter)
 }
 
-func (r *Reservoir) Add(i int) {
-	if r.Counter < r.N() {
-		r.Sample[r.Counter] = i
-		r.LastIndex = r.Counter
-	}
-	if r.Counter > r.N() && rand.Float64() < r.P() {
-		ix := rand.Intn(r.N())
-		r.Sample[ix] = i
-		r.LastIndex = ix
-	}
-	r.Counter++
-}
-
-func stream(size int) <-chan int {
-	ch := make(chan int)
-	go func() {
-		for i := 0; i < size; i++ {
-			ch <- i
+func (r *Reservoir) Add(s string) {
+	if r.counter < int64(r.size) {
+		r.sample = append(r.sample, s)
+	} else {
+		if rand.Float64() < r.P() {
+			ix := rand.Intn(r.size)
+			r.sample[ix] = s
 		}
-		close(ch)
-	}()
-	return ch
+	}
+	r.counter++
 }
 
 func main() {
-	rand.Seed(int64(time.Now().Nanosecond()))
-	rr := &Reservoir{}
-	for i := range stream(1000) {
-		rr.Add(i)
-		fmt.Println(rr)
-		time.Sleep(10 * time.Millisecond)
+	flag.Parse()
+	rand.Seed(*seed)
+	rr := NewReservoirSize(*size)
+	br := bufio.NewReader(os.Stdin)
+	for {
+		line, err := br.ReadString('\n')
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+		rr.Add(strings.TrimSpace(line))
+	}
+	for _, v := range rr.Sample() {
+		fmt.Println(v)
 	}
 }
