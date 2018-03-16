@@ -2,7 +2,7 @@
 
 Simple [reservoir
 sampling](https://en.wikipedia.org/wiki/Reservoir_sampling#Algorithm_R) for the
-command line.
+command line. Works on lines.
 
 ## Install
 ```
@@ -19,7 +19,7 @@ Usage of rsampling:
   -r int
     	random seed (default 945553340)
   -s int
-    	number of sample to obtain (default 16)
+    	number of samples to obtain (default 16)
 
 $ seq 100 | rsampling -s 8
 71

@@ -38,7 +38,7 @@ import (
 )
 
 var (
-	size = flag.Int("s", 16, "number of sample to obtain")
+	size = flag.Int("s", 16, "number of samples to obtain")
 	seed = flag.Int64("r", int64(time.Now().Nanosecond()), "random seed")
 )
 
