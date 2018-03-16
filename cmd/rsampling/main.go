@@ -33,6 +33,7 @@ import (
 	"os"
 	"os/signal"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -96,16 +97,7 @@ func main() {
 	rr := NewReservoirSize(*size)
 	br := bufio.NewReader(os.Stdin)
 
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-
-	go func() {
-		for range c {
-			for _, v := range rr.Sample() {
-				fmt.Println(v)
-			}
-		}
-	}()
+	once := sync.Once{}
 
 	for {
 		line, err := br.ReadString('\n')
@@ -115,6 +107,20 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		once.Do(func() {
+			c := make(chan os.Signal, 1)
+			signal.Notify(c, os.Interrupt)
+
+			go func() {
+				for range c {
+					for _, v := range rr.Sample() {
+						fmt.Println(v)
+					}
+				}
+			}()
+		})
+
 		rr.Add(strings.TrimSpace(line))
 	}
 
