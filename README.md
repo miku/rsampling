@@ -81,12 +81,12 @@ $ seq 100 | shuf | head -16
 
 Sort, shuf and rsampling.
 
-![](bm1.png)
+![](images/bm1.png)
 
 Shuf and rsampling, small N.
 
-![](bm2.png)
+![](images/bm2.png)
 
 Shuf and rsampling, larger N.
 
-![](bm3.png)
+![](images/bm3.png)

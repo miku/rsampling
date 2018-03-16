@@ -94,6 +94,18 @@ class Timer(object):
         self.end = time.time()
         self.elapsed = self.end - self.start
 
+def safe_plot(df, **kwargs):
+    """
+    Create a plot and safe it to a file.
+    """
+    ax = df.plot.bar(grid=True)
+    ax.set_title(kwargs.get('title', ''))
+    ax.set_xlabel(kwargs.get('xlabel', ''))
+    ax.set_ylabel(kwargs.get('ylabel', ''))
+    fig = ax.get_figure()
+    plt.tight_layout()
+    fig.savefig(kwargs.get('filename', 'out.png'))
+    
 
 if __name__ == '__main__':
     # Basic benchmark.
@@ -105,24 +117,17 @@ if __name__ == '__main__':
             shellout("seq {n} | rsampling -s 16", n=n)
         bm['rsampling'].append(t.elapsed)
 
-    for n in sizes:
         with Timer() as t:
             shellout("seq {n} | sort -R | head -16", n=n, pipefail=False)
         bm['sort'].append(t.elapsed)
 
-    for n in sizes:
         with Timer() as t:
             shellout("seq {n} | shuf | head -16", n=n, pipefail=False)
         bm['shuf'].append(t.elapsed)
     
     df = pd.DataFrame(bm, index=sizes)
-    ax = df.plot.bar(grid=True)
-    ax.set_title('Random subset (16 from N) via sort -R, shuf and rsampling')
-    ax.set_xlabel('N')
-    ax.set_ylabel('time (s)')
-    fig = ax.get_figure()
-    plt.tight_layout()
-    fig.savefig('images/bm1.png')
+    safe_plot(df, title='Random subset (16 from N) via sort -R, shuf and rsampling',
+              xlabel='N', ylabel='time (s)', filename='images/bm1.png')
 
     # Compare shuf and rsampling N = 16
     sizes = (1000000, 10000000, 50000000, 100000000)
@@ -133,19 +138,13 @@ if __name__ == '__main__':
             shellout("seq {n} | rsampling -s 16", n=n)
         bm['rsampling'].append(t.elapsed)
 
-    for n in sizes:
         with Timer() as t:
             shellout("seq {n} | shuf | head -16", n=n, pipefail=False)
         bm['shuf'].append(t.elapsed)
     
     df = pd.DataFrame(bm, index=sizes)
-    ax = df.plot.bar(grid=True)
-    ax.set_title('Random subset (16 from N) via shuf and rsampling')
-    ax.set_xlabel('N')
-    ax.set_ylabel('time (s)')
-    fig = ax.get_figure()
-    plt.tight_layout()
-    fig.savefig('images/bm2.png')
+    safe_plot(df, title='Random subset (16 from N) via shuf and rsampling',
+              xlabel='N', ylabel='time (s)', filename='images/bm2.png')
 
     # Compare shuf and rsampling N = 100000
     sizes = (1000000, 10000000, 50000000, 100000000)
@@ -156,16 +155,10 @@ if __name__ == '__main__':
             shellout("seq {n} | rsampling -s 100000 > /dev/null", n=n)
         bm['rsampling'].append(t.elapsed)
 
-    for n in sizes:
         with Timer() as t:
             shellout("seq {n} | shuf | head -100000 > /dev/null", n=n, pipefail=False)
         bm['shuf'].append(t.elapsed)
     
     df = pd.DataFrame(bm, index=sizes)
-    ax = df.plot.bar(grid=True)
-    ax.set_title('Random subset (100000 from N) via shuf and rsampling')
-    ax.set_xlabel('N')
-    ax.set_ylabel('time (s)')
-    fig = ax.get_figure()
-    plt.tight_layout()
-    fig.savefig('images/bm3.png')
+    safe_plot(df, title='Random subset (100000 from N) via shuf and rsampling',
+              xlabel='N', ylabel='time (s)', filename='images/bm3.png')
