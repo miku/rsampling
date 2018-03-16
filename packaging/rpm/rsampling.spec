@@ -1,6 +1,6 @@
 Summary:    Reservoir sampling for the command line.
 Name:       rsampling
-Version:    0.1.0
+Version:    0.2.0
 Release:    0
 License:    GPLv3
 BuildArch:  x86_64

@@ -37,9 +37,12 @@ import (
 	"time"
 )
 
+const Version = "0.2.0"
+
 var (
-	size = flag.Int("n", 16, "number of samples to obtain")
-	seed = flag.Int64("r", int64(time.Now().Nanosecond()), "random seed")
+	size    = flag.Int("n", 16, "number of samples to obtain")
+	seed    = flag.Int64("r", int64(time.Now().Nanosecond()), "random seed")
+	version = flag.Bool("version", false, "show program version")
 )
 
 // Reservoir for strings.
@@ -93,6 +96,10 @@ func (r *Reservoir) Add(s string) {
 
 func main() {
 	flag.Parse()
+	if *version {
+		fmt.Println(Version)
+		os.Exit(0)
+	}
 	rand.Seed(*seed)
 	rr := NewReservoirSize(*size)
 	br := bufio.NewReader(os.Stdin)
