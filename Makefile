@@ -8,6 +8,7 @@ rsampling: cmd/rsampling/main.go
 clean:
 	rm -f rsampling
 
+.PHONY: images
 images:
 	python chart.py
 

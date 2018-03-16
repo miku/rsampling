@@ -122,7 +122,7 @@ if __name__ == '__main__':
         bm['sort'].append(t.elapsed)
 
         with Timer() as t:
-            shellout("seq {n} | shuf | head -16", n=n, pipefail=False)
+            shellout("seq {n} | shuf -n 16", n=n, pipefail=False)
         bm['shuf'].append(t.elapsed)
     
     df = pd.DataFrame(bm, index=sizes)
@@ -139,7 +139,7 @@ if __name__ == '__main__':
         bm['rsampling'].append(t.elapsed)
 
         with Timer() as t:
-            shellout("seq {n} | shuf | head -16", n=n, pipefail=False)
+            shellout("seq {n} | shuf -n 16", n=n, pipefail=False)
         bm['shuf'].append(t.elapsed)
     
     df = pd.DataFrame(bm, index=sizes)
@@ -156,7 +156,7 @@ if __name__ == '__main__':
         bm['rsampling'].append(t.elapsed)
 
         with Timer() as t:
-            shellout("seq {n} | shuf | head -100000 > /dev/null", n=n, pipefail=False)
+            shellout("seq {n} | shuf -n 100000 > /dev/null", n=n, pipefail=False)
         bm['shuf'].append(t.elapsed)
     
     df = pd.DataFrame(bm, index=sizes)
