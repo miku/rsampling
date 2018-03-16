@@ -1,3 +1,26 @@
+// Obtain a random fixed sized sample for a stream of values.
+//
+//     $ time seq 0 100000000 | rsampling
+//     16951800
+//     65338300
+//     57557813
+//     65041034
+//     47811733
+//     5457082
+//     64060517
+//     88134653
+//     39921145
+//     39455085
+//     88732734
+//     58189772
+//     25115415
+//     41692786
+//     8457525
+//     26550644
+//
+//     real	0m16.572s
+//     user	0m17.506s
+//     sys	0m1.048s
 package main
 
 import (
@@ -17,28 +40,35 @@ var (
 	seed = flag.Int64("r", int64(time.Now().Nanosecond()), "random seed")
 )
 
+// Reservoir for strings.
 type Reservoir struct {
 	counter int64
 	size    int
 	sample  []string
 }
 
+// NewReservoir creates a reservoir for 16 elements.
 func NewReservoir() *Reservoir {
 	return &Reservoir{size: 16}
 }
 
+// NewReservoirSize creates a reservoir a given number of elements.
 func NewReservoirSize(size int) *Reservoir {
 	return &Reservoir{size: size}
 }
 
+// String print out the samples, each on one line.
 func (r *Reservoir) String() string {
 	return strings.Join(r.sample, "\n")
 }
 
+// Sample returns the current slice.
 func (r *Reservoir) Sample() []string {
 	return r.sample
 }
 
+// P returns the ratio between sample size and number of elements seen. Used to
+// decide whether to store an element of not.
 func (r *Reservoir) P() float64 {
 	if r.counter < int64(r.size) {
 		return 0
@@ -46,6 +76,7 @@ func (r *Reservoir) P() float64 {
 	return float64(r.size) / float64(r.counter)
 }
 
+// Add fills the reservoir.
 func (r *Reservoir) Add(s string) {
 	if r.counter < int64(r.size) {
 		r.sample = append(r.sample, s)
