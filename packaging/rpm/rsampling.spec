@@ -24,11 +24,11 @@ Simple reservoir sampling.
 
 %install
 # create directories where the files will be located
-mkdir -p $RPM_BUILD_ROOT/usr/local/bin
+mkdir -p $RPM_BUILD_ROOT/usr/local/sbin
 
 # put the files in to the relevant directories.
 # the argument on -m is the permissions expressed as octal. (See chmod man page for details.)
-install -m 755 rsampling $RPM_BUILD_ROOT/usr/local/bin
+install -m 755 rsampling $RPM_BUILD_ROOT/usr/local/sbin
 
 # mkdir -p $RPM_BUILD_ROOT/usr/local/share/man/man1
 # install -m 644 rsampling.1 $RPM_BUILD_ROOT/usr/local/share/man/man1/rsampling.1
