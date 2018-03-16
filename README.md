@@ -87,7 +87,7 @@ Options:
 ```
 $ seq 100 | rsampling -s 16
 $ seq 100 | sort -R | head -16
-$ seq 100 | shuf | head -16
+$ seq 100 | shuf -n 16
 ```
 
 Sort, shuf and rsampling.
