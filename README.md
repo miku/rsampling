@@ -37,9 +37,9 @@ $ time sort -R fixtures/b | head -10
 492182
 20209
 
-real	0m19.137s
-user	1m12.019s
-sys	    0m0.205s
+real    0m19.137s
+user    1m12.019s
+sys     0m0.205s
 
 $ time rsampling -s 10 < fixtures/b
 624611
@@ -53,7 +53,7 @@ $ time rsampling -s 10 < fixtures/b
 16707
 298563
 
-real	0m0.187s
-user	0m0.168s
+real    0m0.187s
+user    0m0.168s
 sys     0m0.013s
 ```
