@@ -8,6 +8,8 @@ command line. Works on lines.
 > containing *n* items, where *n* is either a very large or unknown number.
 > Typically *n* is large enough that the list doesn't fit into main memory.
 
+Original paper: [Random Sampling with a Reservoir](http://www.cs.umd.edu/~samir/498/vitter.pdf) (1985)
+
 ## Install
 ```
 $ go get github.com/miku/rsampling/cmd/...
