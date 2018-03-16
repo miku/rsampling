@@ -99,6 +99,7 @@ if __name__ == '__main__':
     sizes = (10, 100, 1000, 10000, 20000, 30000, 40000, 50000)
     bm = collections.defaultdict(list)
 
+    # Basic benchmark.
     for n in sizes:
         with Timer() as t:
             shellout("seq {n} | rsampling -s 16", n=n)
@@ -152,12 +153,12 @@ if __name__ == '__main__':
 
     for n in sizes:
         with Timer() as t:
-            shellout("seq {n} | rsampling -s 100000", n=n)
+            shellout("seq {n} | rsampling -s 100000 > /dev/null", n=n)
         bm['rsampling'].append(t.elapsed)
 
     for n in sizes:
         with Timer() as t:
-            shellout("seq {n} | shuf | head -100000", n=n, pipefail=False)
+            shellout("seq {n} | shuf | head -100000 > /dev/null", n=n, pipefail=False)
         bm['shuf'].append(t.elapsed)
     
     df = pd.DataFrame(bm, index=sizes)

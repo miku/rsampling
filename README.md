@@ -69,6 +69,16 @@ user    0m0.168s
 sys     0m0.013s
 ```
 
+## Comparison to sort and shuf
+
+Options:
+
+```
+$ seq 100 | rsampling -s 16
+$ seq 100 | sort -R | head -16
+$ seq 100 | shuf | head -16
+```
+
 Sort, shuf and rsampling.
 
 ![](bm1.png)
