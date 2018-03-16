@@ -23,9 +23,9 @@ Or some [release](https://github.com/miku/rsampling/releases).
 $ rsampling -h
 Usage of rsampling:
   -r int
-    	random seed (default 945553340)
-  -s int
-    	number of samples to obtain (default 16)
+        random seed (default 945553340)
+  -n int
+        number of samples to obtain (default 16)
 
 $ seq 100 | rsampling -s 8
 71
@@ -43,7 +43,7 @@ $ seq 100 | rsampling -s 8
 Sometimes a
 
 ```
-sort -R  | head -10
+sort -R | head -10
 ```
 
 is fast enough, but sometimes it is not:
@@ -65,7 +65,7 @@ real    0m19.137s
 user    1m12.019s
 sys     0m0.205s
 
-$ time rsampling -s 10 < fixtures/b
+$ time rsampling -n 10 < fixtures/b
 624611
 645730
 368278
@@ -87,7 +87,7 @@ sys     0m0.013s
 Options:
 
 ```
-$ seq 100 | rsampling -s 16
+$ seq 100 | rsampling -n 16
 $ seq 100 | sort -R | head -16
 $ seq 100 | shuf -n 16
 ```
