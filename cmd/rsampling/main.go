@@ -16,14 +16,16 @@ type Reservoir struct {
 	LastIndex int
 }
 
+var Green = color.New(color.Bold, color.FgGreen).SprintfFunc()
+
 func (r *Reservoir) String() string {
 	var vs []string
 	for i, v := range r.Sample {
+		s := strconv.Itoa(v)
 		if i == r.LastIndex {
-			green := color.New(color.Bold, color.FgGreen).SprintfFunc()
-			vs = append(vs, green(strconv.Itoa(v)))
+			vs = append(vs, Green(s))
 		} else {
-			vs = append(vs, strconv.Itoa(v))
+			vs = append(vs, s)
 		}
 	}
 
