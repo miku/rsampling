@@ -90,10 +90,10 @@ Sort, shuf and rsampling.
 
 ![](images/bm1.png)
 
-Shuf and rsampling, small N.
+Shuf and rsampling, small subset.
 
 ![](images/bm2.png)
 
-Shuf and rsampling, larger N.
+Shuf and rsampling, larger subset.
 
 ![](images/bm3.png)
