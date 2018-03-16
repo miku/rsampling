@@ -8,6 +8,8 @@ rsampling: cmd/rsampling/main.go
 clean:
 	rm -f rsampling
 
+images:
+	python chart.py
 
 deb: rsampling
 	mkdir -p packaging/deb/$(PROJECT)/usr/sbin

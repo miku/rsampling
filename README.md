@@ -68,3 +68,15 @@ real    0m0.187s
 user    0m0.168s
 sys     0m0.013s
 ```
+
+Sort, shuf and rsampling.
+
+![](bm1.png)
+
+Shuf and rsampling, small N.
+
+![](bm2.png)
+
+Shuf and rsampling, larger N.
+
+![](bm3.png)
