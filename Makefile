@@ -7,6 +7,8 @@ rsampling: cmd/rsampling/main.go
 
 clean:
 	rm -f rsampling
+	rm -f rsampling-*.x86_64.rpm
+	rm -f rsampling_*_amd64.deb
 
 .PHONY: images
 images:
