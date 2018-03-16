@@ -96,10 +96,10 @@ class Timer(object):
 
 
 if __name__ == '__main__':
+    # Basic benchmark.
     sizes = (10, 100, 1000, 10000, 20000, 30000, 40000, 50000)
     bm = collections.defaultdict(list)
 
-    # Basic benchmark.
     for n in sizes:
         with Timer() as t:
             shellout("seq {n} | rsampling -s 16", n=n)
@@ -122,7 +122,7 @@ if __name__ == '__main__':
     ax.set_ylabel('time (s)')
     fig = ax.get_figure()
     plt.tight_layout()
-    fig.savefig('bm1.png')
+    fig.savefig('images/bm1.png')
 
     # Compare shuf and rsampling N = 16
     sizes = (1000000, 10000000, 50000000, 100000000)
@@ -145,7 +145,7 @@ if __name__ == '__main__':
     ax.set_ylabel('time (s)')
     fig = ax.get_figure()
     plt.tight_layout()
-    fig.savefig('bm2.png')
+    fig.savefig('images/bm2.png')
 
     # Compare shuf and rsampling N = 100000
     sizes = (1000000, 10000000, 50000000, 100000000)
@@ -168,4 +168,4 @@ if __name__ == '__main__':
     ax.set_ylabel('time (s)')
     fig = ax.get_figure()
     plt.tight_layout()
-    fig.savefig('bm3.png')
+    fig.savefig('images/bm3.png')
