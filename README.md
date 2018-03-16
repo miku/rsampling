@@ -4,6 +4,10 @@ Simple [reservoir
 sampling](https://en.wikipedia.org/wiki/Reservoir_sampling#Algorithm_R) for the
 command line. Works on lines.
 
+> An algorithm for randomly choosing a sample of *k* items from a list *S*
+> containing *n* items, where *n* is either a very large or unknown number.
+> Typically *n* is large enough that the list doesn't fit into main memory.
+
 ## Install
 ```
 $ go get github.com/miku/rsampling/cmd/...
