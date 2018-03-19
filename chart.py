@@ -105,7 +105,7 @@ def safe_plot(df, **kwargs):
     fig = ax.get_figure()
     plt.tight_layout()
     fig.savefig(kwargs.get('filename', 'out.png'))
-    
+
 
 if __name__ == '__main__':
     # Basic benchmark.
@@ -114,7 +114,7 @@ if __name__ == '__main__':
 
     for n in sizes:
         with Timer() as t:
-            shellout("seq {n} | rsampling -s 16", n=n)
+            shellout("seq {n} | rsampling -n 16", n=n)
         bm['rsampling'].append(t.elapsed)
 
         with Timer() as t:
@@ -124,7 +124,7 @@ if __name__ == '__main__':
         with Timer() as t:
             shellout("seq {n} | shuf -n 16", n=n, pipefail=False)
         bm['shuf'].append(t.elapsed)
-    
+
     df = pd.DataFrame(bm, index=sizes)
     safe_plot(df, title='Random subset (16 from N) via sort -R, shuf and rsampling',
               xlabel='N', ylabel='time (s)', filename='images/bm1.png')
@@ -135,13 +135,13 @@ if __name__ == '__main__':
 
     for n in sizes:
         with Timer() as t:
-            shellout("seq {n} | rsampling -s 16", n=n)
+            shellout("seq {n} | rsampling -n 16", n=n)
         bm['rsampling'].append(t.elapsed)
 
         with Timer() as t:
             shellout("seq {n} | shuf -n 16", n=n, pipefail=False)
         bm['shuf'].append(t.elapsed)
-    
+
     df = pd.DataFrame(bm, index=sizes)
     safe_plot(df, title='Random subset (16 from N) via shuf and rsampling',
               xlabel='N', ylabel='time (s)', filename='images/bm2.png')
@@ -152,13 +152,13 @@ if __name__ == '__main__':
 
     for n in sizes:
         with Timer() as t:
-            shellout("seq {n} | rsampling -s 100000 > /dev/null", n=n)
+            shellout("seq {n} | rsampling -n 100000 > /dev/null", n=n)
         bm['rsampling'].append(t.elapsed)
 
         with Timer() as t:
             shellout("seq {n} | shuf -n 100000 > /dev/null", n=n, pipefail=False)
         bm['shuf'].append(t.elapsed)
-    
+
     df = pd.DataFrame(bm, index=sizes)
     safe_plot(df, title='Random subset (100000 from N) via shuf and rsampling',
               xlabel='N', ylabel='time (s)', filename='images/bm3.png')
