@@ -103,3 +103,9 @@ Shuf and rsampling, small subset.
 Shuf and rsampling, larger subset.
 
 ![](images/bm3.png)
+
+----
+
+Visual impression of reservoir sampling:
+
+![](images/demo.gif)
