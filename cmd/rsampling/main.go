@@ -1,4 +1,4 @@
-// Obtain a random fixed sized sample from a stream of values.
+// Obtain a random fixed sized sample from a potentially infinite stream of values.
 //
 //     $ time seq 0 100000000 | rsampling
 //     16951800
