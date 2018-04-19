@@ -27,7 +27,7 @@ Usage of rsampling:
   -n int
         number of samples to obtain (default 16)
 
-$ seq 100 | rsampling -s 8
+$ seq 100 | rsampling -n 8
 71
 21
 83
