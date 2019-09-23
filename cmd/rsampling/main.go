@@ -1,4 +1,4 @@
-// Obtain a random fixed sized sample from a potentially infinite stream of values.
+// Obtain a fixed sized random sample from a potentially infinite stream of values.
 //
 //     $ time seq 0 100000000 | rsampling
 //     16951800
@@ -18,7 +18,7 @@
 //     8457525
 //     26550644
 //
-//     real 0m16.572s
+//     real 0m16.572s // shuf -n takes about 5.1s
 //     user 0m17.506s
 //     sys  0m1.048s
 package main
