@@ -101,11 +101,11 @@ func main() {
 		os.Exit(0)
 	}
 	rand.Seed(*seed)
-	rr := NewReservoirSize(*size)
-	br := bufio.NewReader(os.Stdin)
-
-	once := sync.Once{}
-
+	var (
+		rr   = NewReservoirSize(*size)
+		br   = bufio.NewReader(os.Stdin)
+		once = sync.Once{}
+	)
 	for {
 		line, err := br.ReadString('\n')
 		if err == io.EOF {
@@ -114,11 +114,9 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-
 		once.Do(func() {
 			c := make(chan os.Signal, 1)
 			signal.Notify(c, os.Interrupt)
-
 			go func() {
 				for range c {
 					for _, v := range rr.Sample() {
@@ -127,10 +125,8 @@ func main() {
 				}
 			}()
 		})
-
 		rr.Add(strings.TrimSpace(line))
 	}
-
 	for _, v := range rr.Sample() {
 		fmt.Println(v)
 	}
