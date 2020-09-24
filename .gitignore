@@ -21,3 +21,5 @@ rsampling-*.rpm
 /packaging/deb/rsampling/usr
 
 /cpu-*.pprof
+/cpu-rsampling-scanner.png
+/cpu-rsampling.png

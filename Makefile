@@ -11,6 +11,8 @@ clean:
 	rm -f $(TARGETS)
 	rm -f rsampling-*.x86_64.rpm
 	rm -f rsampling_*_amd64.deb
+	rm -f *.pprof
+	rm -f cpu-rsampling*png
 
 .PHONY: images
 images:
@@ -19,6 +21,9 @@ images:
 
 .PHONY: benchmarks
 benchmarks: cpu-rsampling.png cpu-rsampling-scanner.png
+
+images/synopsis.png: benchmarks
+	montage cpu-rsampling.png cpu-rsampling-scanner.png -tile 2x1 -geometry +1+1 -borderwidth 1 -bordercolor black $@
 
 cpu-%.png: %
 	seq 1 100000000 | ./$^ -cpuprofile cpu-$^.pprof -n 16
