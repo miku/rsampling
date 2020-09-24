@@ -15,7 +15,7 @@ clean:
 	rm -f cpu-rsampling*png
 
 .PHONY: images
-images:
+images: $(TARGETS)
 	python chart.py rsampling
 	python chart.py rsampling-scanner
 
