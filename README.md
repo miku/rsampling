@@ -116,7 +116,7 @@ Visual impression of reservoir sampling:
 
 Optimization oppertunities.
 
-## Using bufio.Scanner, not bufio.Reader
+## From bufio.Reader to bufio.Scanner
 
 Scanner can be faster, since it does not need to allocate memory to return a value.
 
