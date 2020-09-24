@@ -27,14 +27,11 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"io"
 	"log"
 	"math/rand"
 	"os"
-	"os/signal"
 	"runtime/pprof"
 	"strings"
-	"sync"
 	"time"
 )
 
@@ -112,29 +109,13 @@ func main() {
 	}
 	rand.Seed(*seed)
 	var (
-		rr   = NewReservoirSize(*size)
-		br   = bufio.NewReader(os.Stdin)
-		once = sync.Once{}
+		rr      = NewReservoirSize(*size)
+		scanner = bufio.NewScanner(os.Stdin)
+		line    string
 	)
-	for {
-		line, err := br.ReadString('\n')
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			log.Fatal(err)
-		}
-		once.Do(func() {
-			c := make(chan os.Signal, 1)
-			signal.Notify(c, os.Interrupt)
-			go func() {
-				for range c {
-					for _, v := range rr.Sample() {
-						fmt.Println(v)
-					}
-				}
-			}()
-		})
+	scanner.Split(bufio.ScanLines)
+	for scanner.Scan() {
+		line = scanner.Text()
 		rr.Add(strings.TrimSpace(line))
 	}
 	for _, v := range rr.Sample() {
