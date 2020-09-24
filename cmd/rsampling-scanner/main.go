@@ -115,8 +115,8 @@ func main() {
 	)
 	scanner.Split(bufio.ScanLines)
 	for scanner.Scan() {
-		line = scanner.Text()
-		rr.Add(strings.TrimSpace(line))
+		line = strings.TrimSpace(scanner.Text())
+		rr.Add(line)
 	}
 	for _, v := range rr.Sample() {
 		fmt.Println(v)
