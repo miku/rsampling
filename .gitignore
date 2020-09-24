@@ -14,6 +14,7 @@
 .glide/
 
 /rsampling
+/rsampling-scanner
 
 rsampling_*.deb
 rsampling-*.rpm

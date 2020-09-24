@@ -14,7 +14,8 @@ clean:
 
 .PHONY: images
 images:
-	python chart.py
+	python chart.py rsampling
+	python chart.py rsampling-scanner
 
 .PHONY: benchmarks
 benchmarks: cpu-rsampling.png cpu-rsampling-scanner.png

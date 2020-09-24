@@ -6,14 +6,15 @@ Run sort -R, shuf and rsampling performance tests.
 """
 
 import collections
-import time
-import subprocess
 import logging
-import tempfile
 import re
+import subprocess
+import sys
+import tempfile
+import time
 
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("b")
@@ -112,9 +113,14 @@ if __name__ == '__main__':
     sizes = (10, 100, 1000, 10000, 20000, 30000, 40000, 50000)
     bm = collections.defaultdict(list)
 
+    # Allow command to be set as first argument.
+    cmd = "rsampling"
+    if len(sys.argv) > 1:
+        cmd = sys.argv[1]
+
     for n in sizes:
         with Timer() as t:
-            shellout("seq {n} | rsampling -n 16", n=n)
+            shellout("seq {n} | ./{cmd} -n 16", n=n, cmd=cmd)
         bm['rsampling'].append(t.elapsed)
 
         with Timer() as t:
@@ -126,8 +132,8 @@ if __name__ == '__main__':
         bm['shuf'].append(t.elapsed)
 
     df = pd.DataFrame(bm, index=sizes)
-    safe_plot(df, title='Random subset (16 from N) via sort -R, shuf and rsampling',
-              xlabel='N', ylabel='time (s)', filename='images/bm1.png')
+    safe_plot(df, title='Random subset (16 from N) via sort -R, shuf and {}'.format(cmd),
+              xlabel='N', ylabel='time (s)', filename='images/bm1-{}.png'.format(cmd))
 
     # Compare shuf and rsampling N = 16
     sizes = (1000000, 10000000, 50000000, 100000000)
@@ -135,7 +141,7 @@ if __name__ == '__main__':
 
     for n in sizes:
         with Timer() as t:
-            shellout("seq {n} | rsampling -n 16", n=n)
+            shellout("seq {n} | ./{cmd} -n 16", n=n, cmd=cmd)
         bm['rsampling'].append(t.elapsed)
 
         with Timer() as t:
@@ -143,8 +149,8 @@ if __name__ == '__main__':
         bm['shuf'].append(t.elapsed)
 
     df = pd.DataFrame(bm, index=sizes)
-    safe_plot(df, title='Random subset (16 from N) via shuf and rsampling',
-              xlabel='N', ylabel='time (s)', filename='images/bm2.png')
+    safe_plot(df, title='Random subset (16 from N) via shuf and {}'.format(cmd),
+              xlabel='N', ylabel='time (s)', filename='images/bm2-{}.png'.format(cmd))
 
     # Compare shuf and rsampling N = 100000
     sizes = (1000000, 10000000, 50000000, 100000000)
@@ -152,7 +158,7 @@ if __name__ == '__main__':
 
     for n in sizes:
         with Timer() as t:
-            shellout("seq {n} | rsampling -n 100000 > /dev/null", n=n)
+            shellout("seq {n} | ./{cmd} -n 100000 > /dev/null", n=n, cmd=cmd)
         bm['rsampling'].append(t.elapsed)
 
         with Timer() as t:
@@ -160,5 +166,5 @@ if __name__ == '__main__':
         bm['shuf'].append(t.elapsed)
 
     df = pd.DataFrame(bm, index=sizes)
-    safe_plot(df, title='Random subset (100000 from N) via shuf and rsampling',
-              xlabel='N', ylabel='time (s)', filename='images/bm3.png')
+    safe_plot(df, title='Random subset (100000 from N) via shuf and {}'.format(cmd),
+              xlabel='N', ylabel='time (s)', filename='images/bm3-{}.png'.format(cmd))
