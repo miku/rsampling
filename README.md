@@ -94,18 +94,45 @@ $ seq 100 | shuf -n 16
 
 Sort, shuf and rsampling.
 
-![](images/bm1.png)
+![](images/bm1-rsampling.png)
 
 Shuf and rsampling, small subset.
 
-![](images/bm2.png)
+![](images/bm2-rsampling.png)
 
 Shuf and rsampling, larger subset.
 
-![](images/bm3.png)
+![](images/bm3-rsampling.png)
 
 ----
 
 Visual impression of reservoir sampling:
 
 ![](images/demo.gif)
+
+----
+
+# Misc
+
+Optimization oppertunities.
+
+## Using bufio.Scanner, not bufio.Reader
+
+Scanner can be faster, since it does not need to allocate memory to return a value.
+
+![](images/synopsis.png)
+
+Using a scanner, we get closer to `shuf` performance.
+
+Sort, shuf and rsampling.
+
+![](images/bm1-rsampling-scanner.png)
+
+Shuf and rsampling, small subset.
+
+![](images/bm2-rsampling-scanner.png)
+
+Shuf and rsampling, larger subset.
+
+![](images/bm3-rsampling-scanner.png)
+
