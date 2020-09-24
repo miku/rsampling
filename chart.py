@@ -121,7 +121,7 @@ if __name__ == '__main__':
     for n in sizes:
         with Timer() as t:
             shellout("seq {n} | ./{cmd} -n 16", n=n, cmd=cmd)
-        bm['rsampling'].append(t.elapsed)
+        bm[cmd].append(t.elapsed)
 
         with Timer() as t:
             shellout("seq {n} | sort -R | head -16", n=n, pipefail=False)
@@ -142,7 +142,7 @@ if __name__ == '__main__':
     for n in sizes:
         with Timer() as t:
             shellout("seq {n} | ./{cmd} -n 16", n=n, cmd=cmd)
-        bm['rsampling'].append(t.elapsed)
+        bm[cmd].append(t.elapsed)
 
         with Timer() as t:
             shellout("seq {n} | shuf -n 16", n=n, pipefail=False)
@@ -159,7 +159,7 @@ if __name__ == '__main__':
     for n in sizes:
         with Timer() as t:
             shellout("seq {n} | ./{cmd} -n 100000 > /dev/null", n=n, cmd=cmd)
-        bm['rsampling'].append(t.elapsed)
+        bm[cmd].append(t.elapsed)
 
         with Timer() as t:
             shellout("seq {n} | shuf -n 100000 > /dev/null", n=n, pipefail=False)
