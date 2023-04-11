@@ -12,7 +12,7 @@ Original paper: [Random Sampling with a Reservoir](http://www.cs.umd.edu/~samir/
 
 ## Install
 ```
-$ go get github.com/miku/rsampling/cmd/...
+$ go install github.com/miku/rsampling/cmd/...@latest
 ```
 
 Or some [release](https://github.com/miku/rsampling/releases).
